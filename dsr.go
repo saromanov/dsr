@@ -1,6 +1,7 @@
 package dsr
 
 import (
+	"net/http"
 	"sync"
 )
 
@@ -9,6 +10,7 @@ type DSR struct {
 	hasher Hasher
 	config *Config
 	wg     sync.WaitGroup
+	server *http.Server
 }
 
 // New provides initialization of the dsr app
@@ -31,5 +33,11 @@ func (dsr *DSR) Start() error {
 		errCh <- dsr.server.ListenAndServe()
 	}()
 
-	<-dsr.server.StartCh
+	select {
+	case err := <-errCh:
+		return err
+	default:
+	}
+
+	return nil
 }
