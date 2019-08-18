@@ -62,3 +62,7 @@ func NewMemberlistConfig(env string) (*memberlist.Config, error) {
 	}
 	return nil, fmt.Errorf("unknown env: %s", env)
 }
+
+func DefaultConfig() *Config{
+	return &Config{}
+}
