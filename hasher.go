@@ -4,6 +4,7 @@ import (
 	"hash/fnv"
 )
 
+// Hasher defines interface for hash functions
 type Hasher interface {
 	Sum([]byte) uint64
 }
