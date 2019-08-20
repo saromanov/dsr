@@ -20,3 +20,12 @@ func New(conf *Config) (*discovery, error) {
 		list: list,
 	}, nil
 }
+
+func (d *discovery) Join(peer string) error {
+	_, err := d.list.Join([]string{peer})
+	if err != nil {
+		return xerrors.Errorf("unable to join node: %v", err)
+	}
+
+	return nil
+}
