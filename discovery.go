@@ -3,10 +3,12 @@ package dsr
 import (
 	"github.com/hashicorp/memberlist"
 	"golang.org/x/xerrors"
+	"github.com/sirupsen/logrus"
 )
 
 type discovery struct {
 	list *memberlist.Memberlist
+	entry *logrus.Entry
 }
 
 // New provides initialization of the discovery app
@@ -22,10 +24,13 @@ func New(conf *Config) (*discovery, error) {
 }
 
 func (d *discovery) Join(peer string) error {
-	_, err := d.list.Join([]string{peer})
+	nodes, err := d.list.Join([]string{peer})
 	if err != nil {
 		return xerrors.Errorf("unable to join node: %v", err)
 	}
-
+	
+	if len(nodes) == 0 {
+		d.entry.Warn("unable to join nodes")
+	}
 	return nil
 }
