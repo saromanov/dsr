@@ -1,6 +1,8 @@
 package dsr
 
 import (
+	"fmt"
+
 	"github.com/hashicorp/memberlist"
 	"github.com/sirupsen/logrus"
 	"golang.org/x/xerrors"
@@ -38,6 +40,6 @@ func (d *discovery) Join(peer string) error {
 func (d *discovery) GetMembers() {
 	members := d.list.Members()
 	for _, m := range members {
-
+		fmt.Println(m)
 	}
 }
