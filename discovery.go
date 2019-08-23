@@ -11,8 +11,8 @@ type discovery struct {
 	entry *logrus.Entry
 }
 
-// New provides initialization of the discovery app
-func New(conf *Config) (*discovery, error) {
+// NewDiscovery provides initialization of the discovery app
+func NewDiscovery(conf *Config) (*discovery, error) {
 	list, err := memberlist.Create(conf.MemberlistConfig)
 	if err != nil {
 		return nil, xerrors.Errorf("unable to init memberlist config: %v", err)
@@ -38,6 +38,6 @@ func (d *discovery) Join(peer string) error {
 func (d *discovery) GetMembers() {
 	members := d.list.Members()
 	for _, m := range members {
-		
+
 	}
 }
