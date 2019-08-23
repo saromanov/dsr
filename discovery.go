@@ -34,3 +34,10 @@ func (d *discovery) Join(peer string) error {
 	}
 	return nil
 }
+
+func (d *discovery) GetMembers() {
+	members := d.list.Members()
+	for _, m := range members {
+		
+	}
+}
