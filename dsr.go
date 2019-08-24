@@ -1,6 +1,7 @@
 package dsr
 
 import (
+	"context"
 	"net/http"
 	"sync"
 
@@ -8,12 +9,15 @@ import (
 )
 
 type DSR struct {
-	locker *lock
-	hasher Hasher
-	config *Config
-	wg     sync.WaitGroup
-	server *http.Server
-	entry  *logrus.Entry
+	locker    *lock
+	hasher    Hasher
+	config    *Config
+	wg        sync.WaitGroup
+	server    *http.Server
+	entry     *logrus.Entry
+	discovery *discovery
+	ctx       context.Context
+	cancel    context.CancelFunc
 }
 
 // New provides initialization of the dsr app
@@ -22,9 +26,13 @@ func New(conf *Config) (*DSR, error) {
 	if conf == nil {
 		conf = DefaultConfig()
 	}
+
+	ctx, cancel := context.WithCancel(context.Background())
 	dsr := &DSR{
 		config: conf,
 		entry:  &logrus.Entry{},
+		ctx:    ctx,
+		cancel: cancel,
 	}
 	return dsr, nil
 }
