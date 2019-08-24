@@ -10,7 +10,7 @@ import (
 
 type discovery struct {
 	list  *memberlist.Memberlist
-	entry *logrus.Entry
+	log *logrus.Entry
 }
 
 // NewDiscovery provides initialization of the discovery app
@@ -25,6 +25,7 @@ func NewDiscovery(conf *Config) (*discovery, error) {
 	}, nil
 }
 
+// Join provides joining of the peer
 func (d *discovery) Join(peer string) error {
 	nodes, err := d.list.Join([]string{peer})
 	if err != nil {
@@ -32,11 +33,12 @@ func (d *discovery) Join(peer string) error {
 	}
 
 	if nodes == 0 {
-		d.entry.Warn("unable to join nodes")
+		d.log.Warn("unable to join nodes")
 	}
 	return nil
 }
 
+// GetMembers returns list of the members
 func (d *discovery) GetMembers() {
 	members := d.list.Members()
 	for _, m := range members {
