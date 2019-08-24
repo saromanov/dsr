@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"os"
 	"time"
 
 	"github.com/hashicorp/memberlist"
@@ -63,6 +64,14 @@ func NewMemberlistConfig(env string) (*memberlist.Config, error) {
 	return nil, fmt.Errorf("unknown env: %s", env)
 }
 
-func DefaultConfig() *Config{
-	return &Config{}
+func DefaultConfig() *Config {
+	return &Config{
+		Name: setDefaultName(),
+	}
+}
+
+// setDefaultName retruns default host name
+func setDefaultName() string {
+	hostname, _ := os.Hostname()
+	return hostname
 }

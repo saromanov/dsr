@@ -18,6 +18,7 @@ type DSR struct {
 	discovery *discovery
 	ctx       context.Context
 	cancel    context.CancelFunc
+	name      string
 }
 
 // New provides initialization of the dsr app
