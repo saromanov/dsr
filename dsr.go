@@ -2,7 +2,6 @@ package dsr
 
 import (
 	"context"
-	"net/http"
 	"sync"
 
 	"github.com/sirupsen/logrus"
@@ -13,7 +12,7 @@ type DSR struct {
 	hasher    Hasher
 	config    *Config
 	wg        sync.WaitGroup
-	server    *http.Server
+	server    *Server
 	entry     *logrus.Entry
 	discovery *discovery
 	ctx       context.Context
