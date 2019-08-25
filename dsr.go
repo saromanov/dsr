@@ -37,10 +37,6 @@ func New(conf *Config) (*DSR, error) {
 	return dsr, nil
 }
 
-func init(conf *Config) {
-
-}
-
 // Start provides starting of the app
 func (dsr *DSR) Start() error {
 	errCh := make(chan error, 1)
