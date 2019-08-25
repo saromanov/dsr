@@ -52,5 +52,22 @@ func (dsr *DSR) Start() error {
 	default:
 	}
 
-	return nil
+	return dsr.listenAndServe()
+}
+
+func (s *Server) listenAndServe() error {
+	close(s.ch)
+
+	for {
+		conn, err := s.listener.Accept()
+		if err != nil {
+			select {
+			case <-s.ctx.Done():
+				return nil
+			default:
+			}
+			s.logger.Printf("[DEBUG] Failed to accept TCP connection: %v", err)
+			continue
+		}
+	}
 }
